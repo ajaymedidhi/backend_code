@@ -54,3 +54,17 @@ app.get("/details/", async (request, response) => {
     )
   );
 });
+
+app.get("/details/:trackingId", async (request, response) => {
+  const { trackingId } = request.params;
+  const getTrackingId = `
+  SELECT
+  *
+FROM
+  order_status
+WHERE
+  ref_id = ${trackingId};
+   `;
+  const booksArray = await database.all(getTrackingId);
+  response.send(booksArray);
+});
